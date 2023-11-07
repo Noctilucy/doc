@@ -6,13 +6,16 @@ class penjualan extends CI_Controller {
     {
 
         parent::__construct();
+        $this->load->model('Penjualan_model', 'penjualan');
         
     }
 
     public function index() 
     {   
+        $data_penjualan = $this->penjualan->get_list();
         $data = array(
-            'title' => 'List Penjualan'
+            'title'             => 'List Penjualan',
+            'data_penjualan'    => $data_penjualan
         );
         $this->load->view('header');
         $this->load->view('penjualan/list', $data);
@@ -82,6 +85,45 @@ class penjualan extends CI_Controller {
         
         redirect('penjualan','refresh');
     }
+    
+    public function detail($id){
+        //ambil data penjualan
+        $penjualan = $this->penjualan->get_penjualan($id);
+        //ambil detail penjualan
+        $detail_penjualan = $this->penjualan->get_detail_penjualan($id);
+        //tampil data
+        $data = array(
+            'title' => 'Form Penjualan',
+            'penjualan' => $penjualan,
+            'detail_penjualan' => $detail_penjualan,
+        );
+        $this->load->view('header');
+        $this->load->view('penjualan/detail', $data);
+        $this->load->view('footer');
+
+    }
+
+    public function delete(){
+        // // query delete
+        // $this->db->query("DELETE FROM customer WHERE id=".$id);
+        // // redirect
+        // redirect('customer');
+
+        $id = $this->input->post('id');
+        //delete detail
+        //delete penjualan
+        $this->db->delete('detail_penjualan', array('id_penjualan' => $id));
+        $this->db->delete('penjualan', array('id' => $id));
+
+        $hasil = array(
+            'status' => true,
+            'message' => ''
+
+        );
+        echo json_encode($hasil);
+
+    }
+
 }
 
 ?>
