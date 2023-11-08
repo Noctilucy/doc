@@ -2,9 +2,17 @@
 
 class Master_doc extends CI_Controller {
 
+    public function __construct() {
+        
+        parent:: __construct();
+        if ($this->session->userdata('login') != 1){
+            redirect('login');
+        }    }
+
     public function index()
     {
         // $this->load->view('doc_add');
+        
         $data_dokumen = $this->db->query("SELECT * FROM document")->result();
         $title = 'Data Dokumen';
 
