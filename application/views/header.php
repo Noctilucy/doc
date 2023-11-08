@@ -205,7 +205,7 @@
                
           <li class="nav-item">
             <a href="<?= base_url('dashboard')?>" class="nav-link">
-            <i class="fa-regular fa-dinosaur fa-shake"></i>
+            <i class="fa-regular fa-dinosaur fa-shake"></i> 
               <p>
                 Dashobard
                 <!-- <span class="badge badge-info right">2</span> -->
