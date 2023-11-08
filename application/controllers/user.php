@@ -26,7 +26,7 @@ class user extends CI_Controller {
         $nama_user = $this->input->post('nama_user');
         $username = $this->input->post('username');
         $password = $this->input->post('password');
-        $date_created = $this->input->post('date_created');
+        $date_created = date('Y-m-d H:i:s');
         
         // Perform database insertion
         $data_input = array(

@@ -205,7 +205,7 @@
                
           <li class="nav-item">
             <a href="<?= base_url('dashboard')?>" class="nav-link">
-            <i class="fa-regular fa-dinosaur fa-shake"></i> 
+            <i class="nav-icon fas fa-home"></i> 
               <p>
                 Dashobard
                 <!-- <span class="badge badge-info right">2</span> -->
@@ -245,9 +245,19 @@
 
           <li class="nav-item">
             <a href="<?= base_url('penjualan')?>" class="nav-link">
-              <i class="nav-icon fas fa-coins"></i>
+              <i class="nav-icon fas fa-money-check"></i>
               <p>
                 Penjualan
+                <!-- <span class="badge badge-info right">2</span> -->
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?= base_url('user')?>" class="nav-link">
+            <i class="nav-icon fas fa-users-cog"></i>           
+              <p>
+                  User
                 <!-- <span class="badge badge-info right">2</span> -->
               </p>
             </a>

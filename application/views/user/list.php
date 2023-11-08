@@ -75,10 +75,7 @@
                         <label>Password</label>
                         <input type = "password" class = "form-control" name="password" placeholder="Masukkan Password">
                     </div>
-                    <div class = "form-group">
-                        <label>Date</label>
-                        <input type = "date" class = "form-control" name="date_created">
-                    </div>
+ 
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -117,10 +114,6 @@
                     <div class = "form-group">
                         <label>Password</label>
                         <input type = "text" class = "form-control" name="password" id="password" placeholder="Masukkan Password">
-                    </div>
-                    <div class = "form-group">
-                        <label>Date</label>
-                        <input type = "date" class = "form-control" name="date_created" id="date_created">
                     </div>
                     
                 </div>
