@@ -219,6 +219,16 @@
           </li>
 
           <li class="nav-item">
+            <a href="<?= base_url('pembelian')?>" class="nav-link">
+            <i class="nav-icon fas fa-users-cog"></i>           
+              <p>
+                  pembelian
+                <!-- <span class="badge badge-info right">2</span> -->
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="<?= base_url('user')?>" class="nav-link">
             <i class="nav-icon fas fa-users-cog"></i>           
               <p>

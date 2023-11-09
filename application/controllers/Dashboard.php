@@ -15,10 +15,14 @@ class Dashboard extends CI_Controller{
     public function index() 
     {   
         $this->load->model('Penjualan_model', 'penjualan');
+        $this->load->model('Pembelian_model', 'pembelian');
         $penjualan = $this->penjualan->get_resume();
+        $pembelian = $this->pembelian->get_resume();
+
         $data = array(
             'title'             => 'Dashboard',
-            'penjualan' => $penjualan
+            'penjualan' => $penjualan,
+            'pembelian' => $pembelian
         );
         $this->load->view('header');
         $this->load->view('dashboard', $data);

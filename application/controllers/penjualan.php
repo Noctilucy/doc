@@ -1,6 +1,6 @@
 <?php 
 
-class penjualan extends CI_Controller {
+class Penjualan extends CI_Controller {
 
     public function __construct()
     {
@@ -84,6 +84,10 @@ class penjualan extends CI_Controller {
 
             //simpan ke tabel detail
             $this->db->insert('detail_penjualan', $data_produk);
+
+            //kurangin stok
+            // Update produk set stok=stok-qty_penjualan where id_produk = "idproduk"
+            $this->db->query("UPDATE produk SET stok=stok-".$post['qty'][$i]." where id=".$post['id_produk'][$i]);
         }
         
         redirect('penjualan','refresh');
@@ -127,6 +131,34 @@ class penjualan extends CI_Controller {
 
     }
 
+    public function faktur($id){
+        //ambil data penjualan
+        $penjualan = $this->penjualan->get_penjualan($id);
+        //ambil detail penjualan
+        $detail_penjualan = $this->penjualan->get_detail_penjualan($id);
+        //tampil data
+        $data = array(
+            'title' => 'Form Penjualan',
+            'penjualan' => $penjualan,
+            'detail_penjualan' => $detail_penjualan,
+        );
+
+        $this->load->view('penjualan/faktur', $data);
+    
+    }
+
+    public function suratjalan($id){
+        $penjualan = $this->penjualan->get_penjualan($id);
+        $detail_penjualan = $this->penjualan->get_detail_penjualan($id);
+        $data = array(
+            'title' => 'Form Penjualan',
+            'penjualan' => $penjualan,
+            'detail_penjualan' => $detail_penjualan,
+        );
+
+        $this->load->view('penjualan/suratjalan', $data);
+    
+    }
 }
 
 ?>

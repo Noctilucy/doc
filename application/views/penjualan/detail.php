@@ -79,21 +79,36 @@
                                     <tr>
                                         <td><?= $detail->nama_produk; ?></td>
                                         <td><?= $detail->qty; ?></td>
-                                        <td><?= $detail->harga_jual; ?></td>
+                                        <td><?= rupiah($detail->harga_jual); ?></td>
                                         <td><?= $detail->diskon; ?></td>
-                                        <td><?= $detail->total; ?></td>
+                                        <td><?= rupiah($detail->total); ?></td>
                                     </tr>
                                     <?php 
                                        $total_keseluruhan += $detail->total;
 
                                         }?>
+                            </table>
+                            <table  class="table table-bordered table-striped">
                                     <tr>
-                                        <th colspan = "4">Nama Produk</th>
-                                        <th><?= $total_keseluruhan; ?></th>
+                                        <th colspan = "4">Total</th>
+                                        <th><?= rupiah($total_keseluruhan); ?></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan = "4">Total Dibayar</th>
+                                        <th><?= rupiah($penjualan->total_pembayaran); ?></th>
+                                     </tr>
+                                     <tr>
+                                        <th colspan = "4">Sisa Tagihan</th>
+                                        <th><?= rupiah($total_keseluruhan - $penjualan->total_pembayaran); ?></th>
                                      </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div class = "col-12">
+                        <a href="<?= base_url("penjualan/faktur/".$penjualan->id);?>" target = "_blank" class = "btn btn-primary float-right">Print Faktur</a>
+                        <a href="<?= base_url("penjualan/suratjalan/".$penjualan->id);?>" target = "_blank" class = "btn btn-primary float-right mr-3">Print Surat Jalan</a>
+                    </div>
+                    
                     
                 </div>
                 
