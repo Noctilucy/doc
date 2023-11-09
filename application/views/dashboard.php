@@ -55,6 +55,42 @@
       </div>
     </div>
 
-  </div><!-- /.container-fluid -->
+    <div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels : [
+      <?php foreach($data_grafik as $grafik){;?>
+        '<?= $grafik->bulan;?>',
+        <?php } ?>
+        ],
+        datasets: [{
+        label: '# of Votes',
+        data: [
+          <?php  foreach($data_grafik as $grafik){ ?>
+          '<?= $grafik->total; ?>',
+          <?php } ?>
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
 
   

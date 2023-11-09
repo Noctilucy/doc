@@ -128,6 +128,7 @@ class Pembelian extends CI_Controller {
         echo json_encode($hasil);
 
     }
+    
 
 }
 
