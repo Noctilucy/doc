@@ -192,7 +192,7 @@
             <a href="<?= base_url('customer')?>" class="nav-link">
               <i class="nav-icon fas fa-user-tag"></i>
               <p>
-                Customer
+                Client
                 <!-- <span class="badge badge-info right">2</span> -->
               </p>
             </a>

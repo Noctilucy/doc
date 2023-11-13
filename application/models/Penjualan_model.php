@@ -37,6 +37,12 @@ class Penjualan_model extends CI_Model{
         $this->db->from("penjualan");
         return $this->db->get()->row();
     }
+
+    public function get_debit(){
+        $this->db->select("sum(debit) as debit");
+        $this->db->from("kredit_debit");
+        return $this->db->get()->row();
+    }
 }
 
 ?>

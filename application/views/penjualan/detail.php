@@ -1,5 +1,4 @@
 <!-- /.row -->
-<form action="<?= base_url("penjualan/tambah_penjualan");?>" method = "POST">
 <div class="row">
     <div class="col-12">
         <div class="card mt-5">
@@ -61,6 +60,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12">
+                        <form action="" method="POST" id = "form_pembayaran">
                         <table  class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -87,8 +87,6 @@
                                        $total_keseluruhan += $detail->total;
 
                                         }?>
-                            </table>
-                            <table  class="table table-bordered table-striped">
                                     <tr>
                                         <th colspan = "4">Total</th>
                                         <th><?= rupiah($total_keseluruhan); ?></th>
@@ -101,11 +99,20 @@
                                         <th colspan = "4">Sisa Tagihan</th>
                                         <th><?= rupiah($total_keseluruhan - $penjualan->total_pembayaran); ?></th>
                                      </tr>
+                                     <tr>
+                                        <th colspan = "3">Pembayaran</th>
+                                        <input type = "hidden" id = "sisa_tagihan" value ="<?= $total_keseluruhan-$penjualan->total_pembayaran; ?>">
+                                        <input type="hidden" name = "id_penjualan" value = "<?= $penjualan->id?>">
+                                        <th width = "200px"><input type = "number" class = "form-control" id="total_bayar" name = "total_bayar"></th>
+                                        <th width = "200px"><input type = "text" class = "form-control" id="sisa" value = "<?= $total_keseluruhan-$penjualan->total_pembayaran; ?>" readonly></th>
+                                     </tr>
                             </tbody>
                         </table>
+                        </form>
                     </div>
                     <div class = "col-12">
-                        <a href="<?= base_url("penjualan/faktur/".$penjualan->id);?>" target = "_blank" class = "btn btn-primary float-right">Print Faktur</a>
+                        <button type = "button" id = "btn-bayar" class = "btn btn-success float-right">Bayar</button>
+                        <a href="<?= base_url("penjualan/faktur/".$penjualan->id);?>" target = "_blank" class = "btn btn-primary float-right mr-3">Print Faktur</a>
                         <a href="<?= base_url("penjualan/suratjalan/".$penjualan->id);?>" target = "_blank" class = "btn btn-primary float-right mr-3">Print Surat Jalan</a>
                     </div>
                     
@@ -118,105 +125,123 @@
         <!-- /.card -->
     </div>
 </div>
-</form>
 <!-- /.row -->
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mt-1">
+            <div class="card-header">
+                <h3 class="card-title">
+                    History Pembayaran
+                </h3>
+                <div>
+
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table  class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Total Bayar</th>
+                            </thead>
+                                <?php 
+                                foreach($history_pembayaran as $pembayaran){ 
+                                    ?>
+                                    <tr>
+                                        <td><?= $pembayaran->tgl_transaksi; ?></td>
+                                        <td><?= $pembayaran->debit; ?></td>
+                                    </tr>
+                                    <?php  }?>
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+
+
 
 <script>
     $(document).ready(function(){
-        let totalPenjualan = 0;
-        // Buat API untuk ambil data Product
-        // Dari data ini ditampilin di dropdown dan tambah baris 1 baris
-        function getDataProduk(callback){
-            $.ajax({
-                url:'<?= base_url('penjualan/get_produk')?>',
-                type:'GET',
-                success: function(data){
-                    var res = JSON.parse(data);
-                    if (res.status && res.data) {
-                        callback(res.data)
-                    } else {
-                        console.error("Internal Server Error")
-                    }
-                }
-            })
-        }
-        $('#tambah-produk').click(function(){
-            getDataProduk(function(dataProduk){
-                var produkDropDown = `<select class="nama-produk-dropdown form-control" name= "id_produk[]">`;
-                produkDropDown += `<option value="">Silahkan Pilih</option>`
-                dataProduk.forEach((produk)=>{
-                    produkDropDown +=`<option value="${produk.id}">${produk.nama_produk}</option>`
-                })
-                produkDropDown += `</select>`;
+        $("#total_bayar").on("input", validasi); 
 
-                $("#produk-list").append(
-                    `<tr>
-                        <td>${produkDropDown}</td>
-                        <td><input type="number" name="qty[]" min="1" value="1" class="form-control qty"></td>
-                        <td><input type="number" name="harga[]" class="form-control harga" value="${dataProduk[0].harga_jual}"></td>
-                        <td><input type="number" name="diskon[]" value = "0" class="form-control diskon"></td>
-                        <td class="total">0</td>
-                        <td><button type="button" class="hapus-produk btn btn-danger btn-sm">Hapus</td>
-                    </tr>`
-                );
-            })
+        $("#total_bayar").on("input", validasi);
+        
+        
+        function validasi(){
+            var nominal_bayar = $("#total_bayar").val(); 
+            var sisa_tagihan = $('#sisa_tagihan').val();   
+            var sisa_bayar = sisa_tagihan - nominal_bayar;
 
-        })
-
-        $("#produk-list").on("click", ".hapus-produk", function(){
-            $(this).closest("tr").remove();
-        } )
-
-        $("#produk-list").on("change", ".nama-produk-dropdown", function(){
-            const selectedProduk = $(this).val();
-            const row = $(this).closest("tr");
-            getDataProduk(function(dataProduk){
-                const selectedDataProduk = dataProduk.find((produk) => produk.id === selectedProduk);
-                if(selectedDataProduk){
-                    row.find(".harga").val(selectedDataProduk.harga_jual);
-                    updateTotalPenjualan();
-                    updateSisaTagihan();
-                }
-            })
-        })
-
-        $("#produk-list").on("input", ".nama-produk-dropdown, .qty, .harga, .diskon", function(){
-            updateTotalPenjualan();
-        })
-
-        function updateTotalPenjualan(){
-            totalPenjualan = 0;
-            $("#produk-list tr").each(function(){
-                const qty = parseInt($(this).find(".qty").val());
-                const harga = parseFloat($(this).find(".harga").val());
-                const diskon = parseFloat($(this).find(".diskon").val());
-
-                const total = (harga * qty * (100-diskon))/100;
-                $(this).find(".total").text(total);
-                totalPenjualan += total
-            })
-
-            $("#total-penjualan").val(totalPenjualan.toFixed(0))
-        }
-
-        $("#total-pembayaran").on("input", function(){
-            updateSisaTagihan();
-        })
-
-        function updateSisaTagihan(){
-            const totalPembayaran = parseFloat($("#total-pembayaran").val());
-            const sisaTagihan = totalPenjualan - totalPembayaran
-            if (sisaTagihan < 0){
-                alert("total pembayaran melebihi total penjualan");
-                $("#total-pembayaran").val("");
-                $("#sisa-tagihan").val("");
-
+            if (sisa_bayar < 0){
+                alert("Kelebihan Bayar");
+                $("#total_bayar").val("")
+                $('#sisa').val(sisa_tagihan)
+                
+            }else if(nominal_bayar <0){
+                alert("Invalid Input");
+                $("#total_bayar").val("")
+                $('#sisa').val(sisa_tagihan) 
+            
             }else{
-                $("#sisa-tagihan").val(sisaTagihan.toFixed(0));
+                $('#sisa').val(sisa_bayar);
             }
-        }
+        };
 
+        $('#btn-bayar').click(function(){
+              console.log('test')
+            var formData = new FormData($('#form_pembayaran')[0]);
+                $.ajax({
+                    url:"<?php echo base_url('penjualan/pembayaran'); ?>",
+                    type: "POST",
+                    cache: false,
+                    processData: false,
+                    contentType : false,
+                    data: formData,
+                    dataType: 'json',
+                    success: function(result){
+                      console.log(result);
+                        if(result.status == true){
+                          Swal.fire({
+                            title: "Success",
+                            text: "Pembayaran Diterima",
+                            icon: "success",
+                            confirmButtonText: "Done",
+                            customClass: {
+                              confirmButton: "btn btn-primary"
+                            }
+                          }).then((result)=>{
+                            window.location.reload();
+                          });
+                        }else{
+                            Swal.fire({
+                            title: "Gagal",
+                            text: "Internal Server Error ",
+                            icon: "Error",
+                            confirmButtonText: "Done",
+                            customClass: {
+                              confirmButton: "btn btn-primary"
+                            }
+                          })
 
+                        }
+                    },
+                    error: function(xhr, status, error){
+
+                    }
+                });
+            });
 
     })
+    
 </script>
