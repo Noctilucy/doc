@@ -9,7 +9,7 @@ class Penjualan_model extends CI_Model{
 
     public function get_list(){
         // SELECT penjualan.*, customer.nama FROM penjualan JOIN customer ON penjualan.id_customer = customer.id
-        $this->db->select("penjualan.*, customer.nama_customer");
+        $this->db->select("penjualan.*, customer.nama_customer, customer.alamat_customer, customer.telp_customer");
         $this->db->from("penjualan");
         $this->db->join('customer','penjualan.id_customer=customer.id');
         return $this->db->get()->result();
@@ -24,7 +24,7 @@ class Penjualan_model extends CI_Model{
     }
 
     public function get_penjualan($id){
-        $this->db->select("penjualan.*, customer.nama_customer");
+        $this->db->select("penjualan.*, customer.nama_customer, customer.alamat_customer, customer.telp_customer");
         $this->db->from("penjualan");
         $this->db->join('customer','penjualan.id_customer=customer.id');
         $this->db->where("penjualan.id", $id);

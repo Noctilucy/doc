@@ -23,6 +23,15 @@
                             <label for="">Customer</label>
                             <p><?= $penjualan->nama_customer; ?></p>
                         </div>
+                        <div class="form-group">
+                            <label for="">Alamat Customer</label>
+                            <p><?= $penjualan->alamat_customer; ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nomor Telpon Customer</label>
+                            <p><?= $penjualan->telp_customer; ?></p>
+                        </div>
+
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
@@ -104,7 +113,7 @@
                                         <input type = "hidden" id = "sisa_tagihan" value ="<?= $total_keseluruhan-$penjualan->total_pembayaran; ?>">
                                         <input type="hidden" name = "id_penjualan" value = "<?= $penjualan->id?>">
                                         <th width = "200px"><input type = "number" class = "form-control" id="total_bayar" name = "total_bayar"></th>
-                                        <th width = "200px"><input type = "text" class = "form-control" id="sisa" value = "<?= $total_keseluruhan-$penjualan->total_pembayaran; ?>" readonly></th>
+                                        <th width = "200px"><input type = "text" class = "form-control" id="sisa" value = "<?= rupiah($total_keseluruhan-$penjualan->total_pembayaran); ?>" readonly></th>
                                      </tr>
                             </tbody>
                         </table>
@@ -115,17 +124,11 @@
                         <a href="<?= base_url("penjualan/faktur/".$penjualan->id);?>" target = "_blank" class = "btn btn-primary float-right mr-3">Print Faktur</a>
                         <a href="<?= base_url("penjualan/suratjalan/".$penjualan->id);?>" target = "_blank" class = "btn btn-primary float-right mr-3">Print Surat Jalan</a>
                     </div>
-                    
-                    
                 </div>
-                
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
 </div>
-<!-- /.row -->
 
 
 <div class="row">

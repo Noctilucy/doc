@@ -21,13 +21,15 @@ class Dashboard extends CI_Controller{
         $penjualan = $this->penjualan->get_resume();
         $pembelian = $this->pembelian->get_resume();
         $debit = $this->penjualan->get_debit();
+        $kredit = $this->pembelian->get_kredit();
 
         $data = array(
-            'title'             => 'Dashboard',
+            'title'         => 'Dashboard',
             'penjualan' => $penjualan,
             'pembelian' => $pembelian,
             'data_grafik' => $data_grafik,
-            'pembayaran'=> $debit
+            'debit'=> $debit,
+            'kredit'=> $kredit
         );
         $this->load->view('header');
         $this->load->view('dashboard', $data);

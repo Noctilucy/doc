@@ -92,21 +92,26 @@ class Pembelian extends CI_Controller {
     }
     
     public function detail($id){
-        //ambil data pembelian
+        //ambil data penjualan
         $pembelian = $this->pembelian->get_pembelian($id);
         //ambil detail pembelian
         $detail_pembelian = $this->pembelian->get_detail_pembelian($id);
         //tampil data
+
+        //ambil data history pembayaran
+        $pembayaran = $this->db->get_where('kredit_debit', ['id_penjualan_pembelian' =>$id])-> result();
         $data = array(
-            'title' => 'Form pembelian',
+            'title' => 'Form Pembelian',
             'pembelian' => $pembelian,
             'detail_pembelian' => $detail_pembelian,
+            'history_pembayaran' => $pembayaran
         );
         $this->load->view('header');
         $this->load->view('pembelian/detail', $data);
         $this->load->view('footer');
 
     }
+
 
     public function delete(){
         // // query delete
@@ -127,6 +132,54 @@ class Pembelian extends CI_Controller {
         );
         echo json_encode($hasil);
 
+    }
+
+    public function faktur($id){
+        //ambil data pembelian
+        $pembelian = $this->pembelian->get_pembelian($id);
+        //ambil detail pembelian
+        $detail_pembelian = $this->pembelian->get_detail_pembelian($id);
+        //tampil data
+        $data = array(
+            'title' => 'Form pembelian',
+            'pembelian' => $pembelian,
+            'detail_pembelian' => $detail_pembelian,
+        );
+
+        $this->load->view('pembelian/faktur', $data);
+    
+    }
+
+    public function suratjalan($id){
+        $pembelian = $this->pembelian->get_pembelian($id);
+        $detail_pembelian = $this->pembelian->get_detail_pembelian($id);
+        $data = array(
+            'title' => 'Form pembelian',
+            'pembelian' => $pembelian,
+            'detail_pembelian' => $detail_pembelian,
+        );
+
+        $this->load->view('pembelian/suratjalan', $data);
+    
+    }
+
+    public function pembayaran (){
+        $id_pembelian = $this->input->post('id_pembelian');
+        $total_bayar = $this->input->post('total_bayar');
+        $data = array(
+            'kredit' => $total_bayar,
+            'id_penjualan_pembelian' => $id_pembelian,
+            'tgl_transaksi' => date('Y-m-d')
+
+        );
+        $this->db->insert('kredit_debit', $data);
+        $this->db->query('UPDATE pembelian SET total_pembayaran=total_pembayaran+'.$total_bayar.' where id ='. $id_pembelian);
+
+        $response = array(
+            'status' => true
+        );
+
+        echo json_encode($response);
     }
     
 

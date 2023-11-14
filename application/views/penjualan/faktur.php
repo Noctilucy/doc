@@ -22,6 +22,14 @@
                             <label for="" class= "fw-bold">Customer</label>
                             <p><?= $penjualan->nama_customer; ?></p>
                         </div>
+                        <div class="form-group">
+                            <label for="">Alamat Customer</label>
+                            <p><?= $penjualan->alamat_customer; ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nomor Telpon Customer</label>
+                            <p><?= $penjualan->telp_customer; ?></p>
+                        </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">

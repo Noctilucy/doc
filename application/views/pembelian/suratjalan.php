@@ -19,26 +19,26 @@
                     <div class="col-lg-6">
 
                         <div class="form-group">
-                            <label for="" class= "fw-bold">Customer</label>
-                            <p><?= $penjualan->nama_customer; ?></p>
+                            <label for="" class= "fw-bold">supplier</label>
+                            <p><?= $pembelian->nama_supplier; ?></p>
                         </div>
                         <div class="form-group">
-                            <label for="">Alamat Customer</label>
-                            <p><?= $penjualan->alamat_customer; ?></p>
+                            <label for="">Alamat Supplier</label>
+                            <p><?= $pembelian->alamat_supplier; ?></p>
                         </div>
                         <div class="form-group">
-                            <label for="">Nomor Telpon Customer</label>
-                            <p><?= $penjualan->telp_customer; ?></p>
+                            <label for="">Nomor Telpon Supplier</label>
+                            <p><?= $pembelian->telp_supplier; ?></p>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="" class= "fw-bold">Tanggal Transaksi</label>
-                            <p><?= $penjualan->tgl_transaksi;?></p>
+                            <p><?= $pembelian->tgl_transaksi;?></p>
                         </div>
                         <div class="form-group">
                             <label for="" class= "fw-bold">Tanggal Jatuh Tempo</label>
-                            <p><?= $penjualan->tgl_jatuh_tempo;?></p>
+                            <p><?= $pembelian->tgl_jatuh_tempo;?></p>
                         </div>
 
                     </div>
@@ -78,7 +78,7 @@
                             <tbody id="produk-list">
                                 <?php 
                                 $total_quantity = 0;
-                                foreach($detail_penjualan as $detail){ 
+                                foreach($detail_pembelian as $detail){ 
                                     ?>
                                     <tr>
                                         <td><?= $detail->nama_produk; ?></td>
