@@ -5,23 +5,7 @@
 		</div>
 		<div class="container-fluid">
 			<div class="row mr-3 ml-3 mt-3">
-				<div class="col-lg-4 col-6">
-					<div class="small-box bg-primary">
-						<div class="inner">
-							<h3><?= $penjualan->total_penjualan;?></h3>
-							<p>Total Penjualan</p>
-							<p></p>
-						</div>
-
-						<div class="icon">
-							<i class="ion ion-bag"></i>
-						</div>
-						<a href="#" class="small-box-footer"
-							>More info <i class="fas fa-arrow-circle-right"></i
-						></a>
-					</div>
-				</div>
-
+				
 				<div class="col-lg-4 col-6">
 					<div class="small-box bg-success">
 						<div class="inner">
@@ -37,37 +21,6 @@
 					</div>
 				</div>
 
-				<div class="col-lg-4 col-6">
-					<div class="small-box bg-success">
-						<div class="inner">
-							<h3><?= rupiah($penjualan->omset); ?></h3>
-							<p>Total Omset</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-stats-bars"></i>
-						</div>
-						<a href="<?= base_url('penjualan')?>" class="small-box-footer"
-							>More info <i class="fas fa-arrow-circle-right"></i
-						></a>
-					</div>
-				</div>
-
-
-
-				<div class="col-lg-4 col-6">
-					<div class="small-box bg-warning">
-						<div class="inner">
-							<h3><?= $pembelian->total_pembelian;?></h3>
-							<p>Total Pembelian</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-add"></i>
-						</div>
-						<a href="#" class="small-box-footer"
-							>More info <i class="fas fa-arrow-circle-right"></i
-						></a>
-					</div>
-				</div>
 
 				<div class="col-lg-4 col-6">
 					<div class="small-box bg-danger">
@@ -87,8 +40,8 @@
 				<div class="col-lg-4 col-6">
 					<div class="small-box bg-danger">
 						<div class="inner">
-							<h3><?= rupiah($pembelian->pengeluaran); ?></h3>
-							<p>Total Pembelian</p>
+							<h3><?= rupiah($debit->debit - $kredit->kredit ); ?></h3>
+							<p>Laba Kerugian</p>
 						</div>
 						<div class="icon">
 							<i class="ion ion-pie-graph"></i>
@@ -102,3 +55,44 @@
 		</div>
 	</div>
 </div>
+    <div class="row">
+          <div class="col-12">
+            <div class="card mt-5">
+              <div class="card-header">
+                <h3 class="card-title"><?= $title; ?></h3>
+
+              <div class="card-body table-responsive">
+                <table class="table table-hover text-nowrap" id="myTable">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Tanggal</th>
+                      <th>Kredit</th>
+                      <th>Debit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $no = 1;
+                    foreach($data_kd as $kd){ ?>
+                      <tr>
+                      <td><?= $no; ?></td>
+                      <td><?= $kd->tgl_transaksi?></td>
+                      <td><?= $kd->kredit ?></td>
+                      <td><?= $kd->debit ?></td>
+                      </tr>
+                    <?php $no++; } ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+        
+      </div><!-- /.container-fluid -->
+   
+
+      

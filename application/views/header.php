@@ -220,9 +220,9 @@
 
           <li class="nav-item">
             <a href="<?= base_url('pembelian')?>" class="nav-link">
-            <i class="nav-icon fas fa-users-cog"></i>           
+            <i class="nav-icon fas fa-wallet"></i>           
               <p>
-                  pembelian
+                  Pembelian
                 <!-- <span class="badge badge-info right">2</span> -->
               </p>
             </a>
@@ -233,6 +233,17 @@
             <i class="nav-icon fas fa-users-cog"></i>           
               <p>
                   User
+                <!-- <span class="badge badge-info right">2</span> -->
+              </p>
+            </a>
+          </li>
+
+          
+          <li class="nav-item">
+            <a href="<?= base_url('kredit_debit')?>" class="nav-link">
+            <i class="nav-icon fas fa-dollar-sign"></i>           
+              <p>
+                  Debit Kredit
                 <!-- <span class="badge badge-info right">2</span> -->
               </p>
             </a>

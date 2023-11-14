@@ -20,6 +20,9 @@
                       <th>No. Invoice</th>
                       <th>Nama Customer</th>
                       <th>Total Harga</th>
+                      <th>Total Pembayaran</th>
+                      <th>Sisa Pembayaran</th>
+                      <th>Status</th>
                       <th>Jatuh Tempo</th>
                       <!-- <th>Status</th> -->
                       <th>Aksi</th>
@@ -28,12 +31,26 @@
                   <tbody>
                     <?php 
                     $no = 1;
-                    foreach ($data_penjualan as $penjualan) {?>
+                    foreach ($data_penjualan as $penjualan) {
+                      $status = "Open";
+                      if ($penjualan->total_harga-$penjualan->total_pembayaran <= 0){
+                        $status = "Paid";
+                      }else{ 
+                        if (date('Y-m-d') > $penjualan->tgl_jatuh_tempo){
+                          $status = "Open - Overdue";
+                        }else{
+                          $status = "Open";
+                        }
+                      }
+                      ?>
                       <tr>
                         <td><?= $no++; ?></td>
                         <td><?= $penjualan->no_invoice; ?></td>
                         <td><?= $penjualan->nama_customer; ?></td>
                         <td><?= rupiah($penjualan->total_harga); ?></td>
+                        <td><?= rupiah($penjualan->total_pembayaran); ?></td>
+                        <td><?= rupiah($penjualan->total_harga-$penjualan->total_pembayaran);?></td>
+                        <td><?= $status?></td>
                         <td><?= $penjualan->tgl_jatuh_tempo; ?></td>
                         <!-- <td>Status</td> -->
                         <td>

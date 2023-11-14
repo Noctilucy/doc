@@ -12,7 +12,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive">
-                <table class="table table-hover text-nowrap" id="myTable">
+                <table class="table table-hover text-nowrap table-striped" id="myTable">
                   <thead>
                     <tr>
                       <th>Nomor</th>
